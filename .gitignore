@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Env
+.env
+.env.*
+
+# dbt
+/dbt/target/
+/dbt/logs/
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Node (if any tooling appears later)
+node_modules/
