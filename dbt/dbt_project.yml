@@ -1,0 +1,17 @@
+name: marketing_metrics
+version: 1.0.0
+config-version: 2
+
+profile: marketing_metrics
+
+model-paths: ["models"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  marketing_metrics:
+    +materialized: table
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
