@@ -1,0 +1,29 @@
+name: dbt
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch: {}
+jobs:
+  run-dbt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: dbt run
+        env:
+          DBT_HOST: ${{ secrets.DBT_HOST }}
+          DBT_USER: ${{ secrets.DBT_USER }}
+          DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
+          DBT_DBNAME: ${{ secrets.DBT_DBNAME }}
+          DBT_SCHEMA: ${{ secrets.DBT_SCHEMA }}
+          DBT_PORT: ${{ secrets.DBT_PORT }}
+        run: |
+          export DBT_PROFILES_DIR=$GITHUB_WORKSPACE/dbt
+          dbt deps --project-dir dbt
+          dbt run --project-dir dbt
